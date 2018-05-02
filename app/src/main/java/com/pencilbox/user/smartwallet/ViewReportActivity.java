@@ -1,7 +1,5 @@
 package com.pencilbox.user.smartwallet;
 
-import android.app.DatePickerDialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -15,36 +13,24 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.pencilbox.user.smartwallet.Database.PerDayExpenses;
-import com.pencilbox.user.smartwallet.Interface.ExpenseMonthChangeListener;
-import com.pencilbox.user.smartwallet.ViewModel.ReportViewModel;
+import com.pencilbox.user.smartwallet.Interface.ExpenseReport;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -61,17 +47,23 @@ public class ViewReportActivity extends AppCompatActivity implements TabLayout.O
     private RelativeLayout dateLayout;
     //private CalendarView calendarView;
     private MaterialCalendarView calendarView;
-    private ExpenseMonthChangeListener expenseMonthChangeListener;
+    private ExpenseReport expenseReport;
+    private SimpleDateFormat sdf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_report);
         calendarView = findViewById(R.id.calendarView);
-        calendarView.setCurrentDate(Calendar.getInstance());
+        calendarView.state().edit()
+                .setCalendarDisplayMode(CalendarMode.MONTHS)
+                .commit();
+        sdf = new SimpleDateFormat("MMMM yyyy");
+        calendarView.setDateSelected(CalendarDay.today(),true);
         dateTV = findViewById(R.id.dateTextView);
         dateLayout = findViewById(R.id.dateLayout);
         appBarLayout = findViewById(R.id.appBarlayout);
         appBarLayout.setExpanded(false);
+        dateTV.setText(sdf.format(new Date()));
 
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
@@ -85,9 +77,10 @@ public class ViewReportActivity extends AppCompatActivity implements TabLayout.O
 
                 Calendar c = date.getCalendar();
                 int month = c.get(Calendar.MONTH);
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
-                String selectedMonth = sdf.format(c.getTime());
-                expenseMonthChangeListener.onMonthChange(selectedMonth);
+                SimpleDateFormat my = new SimpleDateFormat("MM/yyyy");
+                String selectedMonth = my.format(c.getTime());
+                dateTV.setText(sdf.format(c.getTime()));
+                expenseReport.getBarChartData(selectedMonth);
                 //Toast.makeText(ViewReportActivity.this, selectedMonth, Toast.LENGTH_SHORT).show();
             }
         });
@@ -178,8 +171,8 @@ public class ViewReportActivity extends AppCompatActivity implements TabLayout.O
             switch (position){
                 case 0:
                     GraphReportFragment graphReportFragment = new GraphReportFragment();
-                    expenseMonthChangeListener = graphReportFragment;
-                    //expenseMonthChangeListener.onMonthChange(null);
+                    expenseReport = graphReportFragment;
+                    //expenseReport.getBarChartData(null);
                     return graphReportFragment;
                 case 1:
                     return new SummeryReportFragment();

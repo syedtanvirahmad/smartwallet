@@ -54,6 +54,9 @@ public class ReportViewModel extends AndroidViewModel {
 
     public BarData getBarDataForSelectedMonth(String month){
         days.clear();
+        daysOfMonth.clear();
+        perDayExpenses.clear();
+        barEntries.clear();
         days = getDaysOfMonth(month);
         for(String s : days){
             //Log.e(TAG, s );
@@ -72,8 +75,21 @@ public class ReportViewModel extends AndroidViewModel {
                 e.printStackTrace();
             }
         }
+        SimpleDateFormat my = new SimpleDateFormat("MMM, yyyy");
+        String displayDateString = "";
+        Date displayDate = null;
+        if(month != null){
+            try {
+                displayDate = my.parse(month);
+                displayDateString = my.format(displayDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+
         BarDataSet dataSet =
-                new BarDataSet(barEntries,new SimpleDateFormat("MMM, yyyy").format(new Date()));
+                new BarDataSet(barEntries,displayDateString);
         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         data = new BarData(dataSet);
         return data;
@@ -88,7 +104,7 @@ public class ReportViewModel extends AndroidViewModel {
         List<String>names = expenseDatabase.expenseDao().getDistinctExpenseNamesByMonth(date);
         List<ExpensePerExpenseName> lists = new ArrayList<>();
         for(String s : names){
-            double amount = expenseDatabase.expenseDao().getAmountForSpecificExpense(s);
+            double amount = expenseDatabase.expenseDao().getAmountForSpecificExpense(s,date);
             lists.add(new ExpensePerExpenseName(s,amount));
         }
         return lists;

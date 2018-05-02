@@ -63,6 +63,10 @@ import com.pencilbox.user.smartwallet.Utils.AddExpenseDialog;
 import com.pencilbox.user.smartwallet.Utils.Constants;
 import com.pencilbox.user.smartwallet.Utils.ExpenseFilter;
 import com.pencilbox.user.smartwallet.ViewModel.MainViewModel;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -70,7 +74,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements MainView,MainView.ExpenseAmountListener{
+public class MainActivity extends AppCompatActivity implements MainView,MainView.ExpenseAmountListener, OnDateSelectedListener,OnMonthChangedListener{
     private FirebaseJobDispatcher jobDispatcher;
     private static final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView expenseRV;
@@ -87,10 +91,15 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
     private TextInputEditText amountET, expenseNameET, expenseDateET;
     private SearchView expenseNameSV;
     private ExpenseDateListener expenseDateListener;
+    private MaterialCalendarView materialCalendarView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        materialCalendarView = findViewById(R.id.materialCV);
+        materialCalendarView.setDateSelected(CalendarDay.today(),true);
+        materialCalendarView.setOnDateChangedListener(this);
+        materialCalendarView.setOnMonthChangedListener(this);
         jobDispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
         root = findViewById(R.id.rootLayout);
         bottomSheetRoot = findViewById(R.id.bottomSheetRoot);
@@ -423,5 +432,39 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
     @Override
     public void totalExpenseAmount(List<Expense> expenses) {
         expenseAmountTV.setText("Total: "+String.valueOf(mainViewModel.getTotalExpenseAmount(expenses)));
+    }
+
+    @Override
+    public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+        Date selectedDate = date.getDate();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String d = sdf.format(selectedDate);
+        mainViewModel.getExpensesForSelectedDate(d).observe(this, new Observer<List<Expense>>() {
+            @Override
+            public void onChanged(@Nullable List<Expense> expenses) {
+                expenseAdapter.addExpenseItems(expenses);
+                expenseAmountTV.setText("Total: "+String.valueOf(mainViewModel.getTotalExpenseAmount(expenses)));
+            }
+        });
+    }
+
+    @Override
+    public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
+        Date selectedDate = date.getDate();
+        Calendar c = Calendar.getInstance();
+        if(date.getMonth() != c.get(Calendar.MONTH)){
+            materialCalendarView.setDateSelected(selectedDate,true);
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String d = sdf.format(selectedDate);
+        //Toast.makeText(this, d, Toast.LENGTH_SHORT).show();
+        mainViewModel.getExpensesForSelectedDate(d).observe(this, new Observer<List<Expense>>() {
+            @Override
+            public void onChanged(@Nullable List<Expense> expenses) {
+                expenseAdapter.addExpenseItems(expenses);
+                expenseAmountTV.setText("Total: "+String.valueOf(mainViewModel.getTotalExpenseAmount(expenses)));
+            }
+        });
     }
 }

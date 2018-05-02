@@ -7,17 +7,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.pencilbox.user.smartwallet.Interface.ExpenseMonthChangeListener;
+import com.pencilbox.user.smartwallet.Interface.ExpenseReport;
 import com.pencilbox.user.smartwallet.ViewModel.ReportViewModel;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GraphReportFragment extends Fragment implements ExpenseMonthChangeListener{
+public class GraphReportFragment extends Fragment implements ExpenseReport {
     private BarChart mBarChart;
     private ReportViewModel reportViewModel;
 
@@ -42,9 +41,10 @@ public class GraphReportFragment extends Fragment implements ExpenseMonthChangeL
     }
 
     @Override
-    public void onMonthChange(String month) {
-        Toast.makeText(getActivity(), "called : "+month, Toast.LENGTH_SHORT).show();
-        mBarChart.clearValues();
+    public void getBarChartData(String month) {
+        //Toast.makeText(getActivity(), "called : "+month, Toast.LENGTH_SHORT).show();
+        //mBarChart.clearValues();
+        mBarChart.clear();
         mBarChart.setData(reportViewModel.getBarDataForSelectedMonth(month));
     }
 }

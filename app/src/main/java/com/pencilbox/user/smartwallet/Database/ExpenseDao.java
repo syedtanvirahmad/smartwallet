@@ -25,6 +25,9 @@ public interface ExpenseDao {
     @Query("select * from expense where expense_date_time like:date order by id desc")
     LiveData<List<Expense>>getCurrentMonthExpense(String date);
 
+    @Query("select * from expense where expense_date_time like:date order by id desc")
+    LiveData<List<Expense>>getSeletectedMonthExpense(String date);
+
     @Query("select sum(expense_amount) from expense")
     double getGrandTotalExpenses();
 
@@ -85,6 +88,6 @@ public interface ExpenseDao {
     @Query("select distinct expense_name from expense where expense_date_time like:date")
         List<String>getDistinctExpenseNamesByMonth(String date);
 
-    @Query("select sum(expense_amount) from expense where expense_name like:name")
-    double getAmountForSpecificExpense(String name);
+    @Query("select sum(expense_amount) from expense where expense_name like:name and expense_date_time like:date")
+    double getAmountForSpecificExpense(String name, String date);
 }

@@ -60,7 +60,6 @@ public class MainViewModel extends AndroidViewModel {
 
     public LiveData<List<Expense>> getAllExpenses() {
         expenses = expenseDatabase.expenseDao().getAllExpenses();
-
         return expenses;
     }
 
@@ -76,6 +75,10 @@ public class MainViewModel extends AndroidViewModel {
         String date = sdf.format(new Date()) + "%";
         todayExpenses = expenseDatabase.expenseDao().getTodaysExpense(date);
         return todayExpenses;
+    }
+
+    public LiveData<List<Expense>>getExpensesForSelectedDate(String date){
+        return expenseDatabase.expenseDao().getSeletectedMonthExpense(date);
     }
 
     public LiveData<List<Expense>> getCurrentMonthExpense() {
