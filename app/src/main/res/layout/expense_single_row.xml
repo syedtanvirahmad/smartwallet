@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardCornerRadius="5dp"
+    app:contentPadding="7dp"
+    android:layout_margin="5dp"
+    app:cardElevation="9dp"
+    app:cardBackgroundColor="@color/brown">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/dailyExpenseAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="1200"
+            style="@style/amoountStyle"/>
+        <TextView
+            android:id="@+id/dailyExpenseType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="My new white shirt"
+            style="@style/expenseTextStyle"/>
+        <TextView
+            android:id="@+id/dailyExpenseDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="20-11-2017 08:26:58"
+            style="@style/expenseTextStyle"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

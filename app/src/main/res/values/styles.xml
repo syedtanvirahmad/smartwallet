@@ -1,0 +1,24 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="amoountStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:gravity">left</item>
+    </style>
+    <style name="expenseTextStyle" parent="amoountStyle">
+        <item name="android:textStyle">italic|bold</item>
+
+    </style>
+    <style name="button_tab_style">
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:background">@drawable/button_background</item>
+    </style>
+
+</resources>

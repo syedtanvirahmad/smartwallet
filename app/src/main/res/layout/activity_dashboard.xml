@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.pencilbox.user.smartwallet.DashboardActivity">
+
+    <include
+        android:id="@+id/mainToolbar"
+        layout="@layout/toolbar"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/lastIncomeValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                style="@style/TextAppearance.AppCompat.Small"
+                tools:text="last income added on ..."/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:elevation="5dp"
+                    app:contentPadding="3dp"
+                    android:layout_margin="2dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/labelGrandTotalIncome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Income" />
+
+                        <TextView
+                            android:id="@+id/grandTotalIncome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/labelGrandTotalIncome"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            tools:text="80000" />
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:elevation="5dp"
+                    app:contentPadding="3dp"
+                    android:layout_margin="2dp">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/labelGrandTotalExpense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Expense" />
+                        <TextView
+                            android:id="@+id/grandTotalExpense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/labelGrandTotalExpense"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            tools:text="28336" />
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:elevation="5dp"
+                    app:contentPadding="3dp"
+                    android:layout_margin="2dp">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/labelAverageIncome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Current Balance" />
+                        <TextView
+                            android:id="@+id/currentBalanceValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/labelAverageIncome"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            tools:text="50000" />
+                        <TextView
+                            android:id="@+id/labelIncPerYear"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:layout_below="@id/currentBalanceValue"
+                            android:text="/year"
+                            android:visibility="invisible"/>
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:elevation="5dp"
+                    app:contentPadding="3dp"
+                    android:layout_margin="2dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/labelAverageExpense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Avg Expense" />
+                        <TextView
+                            android:id="@+id/averageExpense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/labelAverageExpense"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            tools:text="45256" />
+                        <TextView
+                            android:id="@+id/labelExpPerMonth"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:layout_below="@id/averageExpense"
+                            android:text="/month" />
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:elevation="5dp"
+                    app:contentPadding="3dp"
+                    android:layout_margin="2dp">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/labelAverageIncomeMonth"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Avg Income" />
+                        <TextView
+                            android:id="@+id/averageIncomeMonth"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/labelAverageIncomeMonth"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            tools:text="50000" />
+                        <TextView
+                            android:id="@+id/labelPerMonth"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:layout_below="@id/averageIncomeMonth"
+                            android:text="/month" />
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:elevation="5dp"
+                    app:contentPadding="3dp"
+                    android:layout_margin="2dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/labelAverageExpenseDay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Avg Expense" />
+                        <TextView
+                            android:id="@+id/averageExpenseDay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/labelAverageExpenseDay"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            tools:text="758" />
+                        <TextView
+                            android:id="@+id/labelPerDay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:layout_below="@id/averageExpenseDay"
+                            android:text="/day" />
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/itemViewExpense"
+        android:title="View Expense"
+        app:showAsAction="never"/>
+    <item android:id="@+id/incomeSource"
+        android:title="Add Income Source"
+        app:showAsAction="never"/>
+    <item android:id="@+id/addIncome"
+        android:title="Add Income"
+        app:showAsAction="never"/>
+    <item android:id="@+id/showIncome"
+        android:title="Show Income"
+        app:showAsAction="never"/>
+</menu>

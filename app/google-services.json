@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "24667934083",
+    "firebase_url": "https://smart-wallet-3bf5b.firebaseio.com",
+    "project_id": "smart-wallet-3bf5b",
+    "storage_bucket": "smart-wallet-3bf5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24667934083:android:363d3032eafa2d6f",
+        "android_client_info": {
+          "package_name": "com.pencilbox.user.smartwallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24667934083-93ful8vo0v5jv0eu38ufrank09o1u2rs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pencilbox.user.smartwallet",
+            "certificate_hash": "8cb6d5eb10417e188ff089498a21df611d8dc847"
+          }
+        },
+        {
+          "client_id": "24667934083-rjps4le2s4dbt5dgnkolcjoad1501hrr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjb9rwANmGFnlQzz1m_AmyJuhk0oACIbs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24667934083-rjps4le2s4dbt5dgnkolcjoad1501hrr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
