@@ -111,7 +111,8 @@ public class ReportViewModel extends AndroidViewModel {
         List<String>names = expenseDatabase.expenseDao().getDistinctExpenseNamesByMonth(date);
         for(String s : names){
             double amount = expenseDatabase.expenseDao().getAmountForSpecificExpense(s,date);
-            lists.add(new ExpensePerExpenseName(s,amount));
+            String nameCapFirst = s.substring(0,1).toUpperCase()+s.substring(1);
+            lists.add(new ExpensePerExpenseName(nameCapFirst,amount));
         }
         return lists;
     }
