@@ -48,6 +48,7 @@ public class ViewReportActivity extends AppCompatActivity implements TabLayout.O
     //private CalendarView calendarView;
     private MaterialCalendarView calendarView;
     private ExpenseReport expenseReport;
+    private ExpenseReport.SummeryReport summeryReport;
     private SimpleDateFormat sdf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,7 @@ public class ViewReportActivity extends AppCompatActivity implements TabLayout.O
                 String selectedMonth = my.format(c.getTime());
                 dateTV.setText(sdf.format(c.getTime()));
                 expenseReport.getBarChartData(selectedMonth);
+                summeryReport.getSummeryData(selectedMonth);
                 //Toast.makeText(ViewReportActivity.this, selectedMonth, Toast.LENGTH_SHORT).show();
             }
         });
@@ -172,10 +174,11 @@ public class ViewReportActivity extends AppCompatActivity implements TabLayout.O
                 case 0:
                     GraphReportFragment graphReportFragment = new GraphReportFragment();
                     expenseReport = graphReportFragment;
-                    //expenseReport.getBarChartData(null);
                     return graphReportFragment;
                 case 1:
-                    return new SummeryReportFragment();
+                    SummeryReportFragment summeryReportFragment = new SummeryReportFragment();
+                    summeryReport = summeryReportFragment;
+                    return summeryReportFragment;
             }
             return null;
         }

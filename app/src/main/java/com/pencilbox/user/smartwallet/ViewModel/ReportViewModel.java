@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.data.BarData;
@@ -98,11 +99,16 @@ public class ReportViewModel extends AndroidViewModel {
     public ViewReportActivity.MyXAxisValueFormatter getValueFormatter(){
         return new ViewReportActivity.MyXAxisValueFormatter(daysOfMonth);
     }
-    public List<ExpensePerExpenseName>getExpensesForExpenseNames(){
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
-        String date = "%/"+sdf.format(new Date());
-        List<String>names = expenseDatabase.expenseDao().getDistinctExpenseNamesByMonth(date);
+    public List<ExpensePerExpenseName>getExpensesForExpenseNames(@Nullable String month){
         List<ExpensePerExpenseName> lists = new ArrayList<>();
+        String date = "";
+        if(month == null){
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
+            date = "%/"+sdf.format(new Date());
+        }else{
+            date = "%/"+month;
+        }
+        List<String>names = expenseDatabase.expenseDao().getDistinctExpenseNamesByMonth(date);
         for(String s : names){
             double amount = expenseDatabase.expenseDao().getAmountForSpecificExpense(s,date);
             lists.add(new ExpensePerExpenseName(s,amount));

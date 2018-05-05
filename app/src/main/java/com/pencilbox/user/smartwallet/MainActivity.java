@@ -24,10 +24,14 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -92,10 +96,27 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
     private SearchView expenseNameSV;
     private ExpenseDateListener expenseDateListener;
     private MaterialCalendarView materialCalendarView;
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mDrawerLayout = findViewById(R.id.drawerLayout);
+        mNavigationView = findViewById(R.id.navigationView);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_drawer);
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
         materialCalendarView = findViewById(R.id.materialCV);
         materialCalendarView.setDateSelected(CalendarDay.today(),true);
         materialCalendarView.setOnDateChangedListener(this);
@@ -116,11 +137,11 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         //mainViewModel.uploadAllExpenses();
         expenseRV = findViewById(R.id.dailyExpenseRV);
-        toolbar = findViewById(R.id.toolbar);
+
         expenseAmountTV = findViewById(R.id.totalExpenseForTodayTV);
         collapsingToolbarLayout = findViewById(R.id.collapsingToolbarLayout);
         collapsingToolbarLayout.setTitle("Expense List");
-        setSupportActionBar(toolbar);
+
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchCallback);
         itemTouchHelper.attachToRecyclerView(expenseRV);
         expenseAdapter = new ExpenseAdapter(this,expenses);
@@ -244,6 +265,9 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
                 startActivity(new Intent(MainActivity.this,ViewReportActivity.class));
                 break;
             case R.id.searchItem:
+                break;
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -450,14 +474,18 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
 
     @Override
     public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date selectedDate = date.getDate();
         Calendar c = Calendar.getInstance();
+        String d = "";
         if(date.getMonth() != c.get(Calendar.MONTH)){
             materialCalendarView.setDateSelected(selectedDate,true);
+            d = sdf.format(selectedDate);
+        }else{
+            d = sdf.format(new Date());
+            materialCalendarView.setDateSelected(new Date(),true);
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String d = sdf.format(selectedDate);
         //Toast.makeText(this, d, Toast.LENGTH_SHORT).show();
         mainViewModel.getExpensesForSelectedDate(d).observe(this, new Observer<List<Expense>>() {
             @Override

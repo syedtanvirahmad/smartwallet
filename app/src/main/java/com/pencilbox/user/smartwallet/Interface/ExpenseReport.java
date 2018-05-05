@@ -9,6 +9,6 @@ import android.support.annotation.Nullable;
 public interface ExpenseReport {
     void getBarChartData(String month);
     interface SummeryReport{
-
+        void getSummeryData(String month);
     }
 }
