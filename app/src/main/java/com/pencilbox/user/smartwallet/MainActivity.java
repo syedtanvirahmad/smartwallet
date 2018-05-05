@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                item.setChecked(true);
+                //item.setChecked(true);
                 mDrawerLayout.closeDrawers();
                 return true;
             }
