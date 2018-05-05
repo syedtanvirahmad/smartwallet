@@ -90,4 +90,7 @@ public interface ExpenseDao {
 
     @Query("select sum(expense_amount) from expense where expense_name like:name and expense_date_time like:date")
     double getAmountForSpecificExpense(String name, String date);
+
+    @Query("select sum(expense_amount) from expense where expense_date_time like:date")
+    double getTotalExpenseByMonth(String date);
 }
