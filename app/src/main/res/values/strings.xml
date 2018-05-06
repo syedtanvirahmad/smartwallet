@@ -24,6 +24,7 @@
     <string name="add_income">Add Income</string>
     <string name="add_income_source">Add Income Source</string>
     <string name="view_income">View Income</string>
+    <string name="view_expense">View All Expenses</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

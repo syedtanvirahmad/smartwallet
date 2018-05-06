@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_camera"
+        android:id="@+id/nav_addIncomeSource"
         android:icon="@mipmap/ic_launcher"
         android:title="@string/add_income_source" />
     <item
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_addIncome"
         android:icon="@mipmap/ic_launcher"
         android:title="@string/add_income" />
     <item
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_viewIncome"
         android:icon="@mipmap/ic_launcher"
         android:title="@string/view_income" />
+    <item
+        android:id="@+id/nav_viewExpenses"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/view_expense" />
 </menu>

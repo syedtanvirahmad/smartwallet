@@ -56,42 +56,6 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.dashboard_menu,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.itemViewExpense:
-                startActivity(new Intent(DashboardActivity.this,MainActivity.class));
-                break;
-
-            case R.id.incomeSource:
-                AddExpenseDialog.createDialogForAddingIncomeSource(this, new AddIncomeListener.AddIncomeSourceListener() {
-                    @Override
-                    public void onAddIncomeSourceAdded() {
-
-                    }
-                });
-                break;
-            case R.id.addIncome:
-                AddExpenseDialog.createDialogForAddingIncome(this, new AddIncomeListener() {
-                    @Override
-                    public void onAddIncome() {
-
-                    }
-                });
-                break;
-            case R.id.showIncome:
-                startActivity(new Intent(DashboardActivity.this,ShowIncomeActivity.class));
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void setAvgDailyExpense(double expense) {
         avgExpenseDayTV.setText(String.format("%.1f",expense));
     }

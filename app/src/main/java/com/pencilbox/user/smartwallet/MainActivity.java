@@ -59,6 +59,7 @@ import com.firebase.jobdispatcher.Trigger;
 import com.pencilbox.user.smartwallet.Adapter.ExpenseAdapter;
 import com.pencilbox.user.smartwallet.Database.Expense;
 import com.pencilbox.user.smartwallet.Database.ExpenseDatabase;
+import com.pencilbox.user.smartwallet.Interface.AddIncomeListener;
 import com.pencilbox.user.smartwallet.Interface.LoadFilteredExpenses;
 import com.pencilbox.user.smartwallet.Interface.MainView;
 import com.pencilbox.user.smartwallet.Interface.MainViewImpl;
@@ -114,6 +115,38 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 //item.setChecked(true);
                 mDrawerLayout.closeDrawers();
+                switch (item.getItemId()){
+                    case R.id.nav_addIncomeSource:
+                        AddExpenseDialog.createDialogForAddingIncomeSource(MainActivity.this, new AddIncomeListener.AddIncomeSourceListener() {
+                            @Override
+                            public void onAddIncomeSourceAdded() {
+                                Snackbar.make(root,"Income Source Added",Snackbar.LENGTH_SHORT).show();
+                            }
+                        });
+                        return true;
+                    case R.id.nav_addIncome:
+                        AddExpenseDialog.createDialogForAddingIncome(MainActivity.this, new AddIncomeListener() {
+                            @Override
+                            public void onAddIncome() {
+                                Snackbar.make(root,"Income Added",Snackbar.LENGTH_SHORT).show();
+                            }
+                        });
+                        return true;
+                    case R.id.nav_viewIncome:
+                        startActivity(new Intent(MainActivity.this,ShowIncomeActivity.class));
+                        return true;
+                    case R.id.nav_viewExpenses:
+                        mainViewModel.getAllExpenses().observe(MainActivity.this, new Observer<List<Expense>>() {
+                            @Override
+                            public void onChanged(@Nullable List<Expense> expenses) {
+                                expenseAdapter.addExpenseItems(expenses);
+                                expenseAmountTV.setText("Total: "+String.valueOf(mainViewModel.getTotalExpenseAmount(expenses)));
+                            }
+                        });
+                        return true;
+
+                }
+
                 return true;
             }
         });

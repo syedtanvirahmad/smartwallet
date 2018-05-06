@@ -27,7 +27,7 @@
         <activity android:name=".DashboardActivity" />
         <activity
             android:name=".ShowIncomeActivity"
-            android:parentActivityName=".DashboardActivity" />
+            android:parentActivityName=".MainActivity" />
 
         <provider
             android:name=".ExpenseSuggestion"

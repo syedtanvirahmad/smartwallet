@@ -119,7 +119,7 @@ public final class AddExpenseDialog {
                 IncomeSource is = new IncomeSource(orgName,incomeType);
                 long[]inserted = expenseDatabase.expenseDao().insertIncomeSource(is);
                 if(inserted[0] > 0){
-                    Toast.makeText(context, "Income source added", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "Income source added", Toast.LENGTH_SHORT).show();
                     listener.onAddIncomeSourceAdded();
                 }else{
                     Toast.makeText(context, "Could not save", Toast.LENGTH_SHORT).show();
