@@ -5,7 +5,11 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -68,5 +72,15 @@ public class ValueAverageCalculateImpl implements DashboardView.ValueAverageCalc
     @Override
     public void getCurrentBalance(double income, double expense) {
         view.setCurrentBalance(income - expense);
+    }
+
+    @Override
+    public void getAvgIncomePerMonth(double income, List<String>dates) {
+        Set<String> months = new HashSet<>();
+        for(String st : dates){
+            String n = st.substring(3);
+            months.add(n);
+        }
+        view.setAvgMonthlyIncome(income / months.size());
     }
 }

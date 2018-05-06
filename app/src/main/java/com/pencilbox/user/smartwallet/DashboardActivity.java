@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -15,6 +16,9 @@ import com.pencilbox.user.smartwallet.Interface.ValueAverageCalculateImpl;
 import com.pencilbox.user.smartwallet.Utils.AddExpenseDialog;
 import com.pencilbox.user.smartwallet.ViewModel.DashboardViewModel;
 import com.pencilbox.user.smartwallet.ViewModel.IncomeViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity implements DashboardView{
 
@@ -53,6 +57,8 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
         valueAverageCalculate.getAvgExpensePerDay(dashboardViewModel.getTotalDays(),dashboardViewModel.getGrandExpense());
         valueAverageCalculate.getAvgExpensePerMonth(dashboardViewModel.getTotalDays(),dashboardViewModel.getGrandExpense());
         valueAverageCalculate.getCurrentBalance(dashboardViewModel.getGrandIncome(),dashboardViewModel.getGrandExpense());
+        valueAverageCalculate.getAvgIncomePerMonth(dashboardViewModel.getGrandIncome(),dashboardViewModel.getIncomeDates());
+
     }
 
     @Override
@@ -68,5 +74,10 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     @Override
     public void setCurrentBalance(double amount) {
         currentBalanceTV.setText(String.valueOf(amount));
+    }
+
+    @Override
+    public void setAvgMonthlyIncome(double amount) {
+        avgIncomeMonthTV.setText(String.valueOf(amount));
     }
 }

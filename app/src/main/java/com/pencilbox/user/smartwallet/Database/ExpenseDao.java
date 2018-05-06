@@ -93,4 +93,11 @@ public interface ExpenseDao {
 
     @Query("select sum(expense_amount) from expense where expense_date_time like:date")
     double getTotalExpenseByMonth(String date);
+
+    @Query("select distinct income_date from income_table")
+    List<String>getDistinctIncomeMonths();
+
+    @Query("select sum(income_amount) from income_table where income_date like:date")
+    double getTotalIncomeByDate(String date);
+
 }
