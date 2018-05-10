@@ -15,11 +15,15 @@ import com.pencilbox.user.smartwallet.Database.Expense;
 import com.pencilbox.user.smartwallet.Database.ExpenseDatabase;
 import com.pencilbox.user.smartwallet.Database.ExpensePerExpenseName;
 import com.pencilbox.user.smartwallet.Database.PerDayExpenses;
+import com.pencilbox.user.smartwallet.Interface.ExpenseReport;
+import com.pencilbox.user.smartwallet.Interface.ExpenseReportImpl;
 import com.pencilbox.user.smartwallet.ViewReportActivity;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +39,10 @@ public class ReportViewModel extends AndroidViewModel {
     private List<String>days = new ArrayList<>();
     private List<String>daysOfMonth = new ArrayList<>();
     private BarData data;
+    private SimpleDateFormat my;
+    private Calendar calendar;
+    private String selectedMonth = "";
+    private ExpenseReport expenseReport;
     public ReportViewModel(@NonNull Application application) {
         super(application);
         this.context = application;
@@ -42,6 +50,23 @@ public class ReportViewModel extends AndroidViewModel {
         barEntries = new ArrayList<>();
     }
 
+    private void init(CalendarDay day){
+        calendar = day.getCalendar();
+        my = new SimpleDateFormat("MM/yyyy");
+    }
+    private void init(){
+
+    }
+
+    public String getSelectedMonth(CalendarDay date){
+        init(date);
+        return my.format(calendar.getTime());
+    }
+
+    public String getSelectedMonthFormattedText(CalendarDay date){
+        init(date);
+        return new SimpleDateFormat("MMM yyyy").format(calendar.getTime());
+    }
     private List<String> getDaysOfMonth(String month){
         SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
         String date = month != null ? "%/"+month : "%/"+sdf.format(new Date());

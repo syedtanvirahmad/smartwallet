@@ -1,5 +1,6 @@
 package com.pencilbox.user.smartwallet;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -16,14 +17,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.pencilbox.user.smartwallet.Database.Expense;
 import com.pencilbox.user.smartwallet.Interface.ExpenseReport;
+import com.pencilbox.user.smartwallet.ViewModel.ReportViewModel;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -31,6 +37,7 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -50,10 +57,13 @@ public class ViewReportActivity extends AppCompatActivity implements TabLayout.O
     private ExpenseReport expenseReport;
     private ExpenseReport.SummeryReport summeryReport;
     private SimpleDateFormat sdf;
+    private Fragment[]fragments = new Fragment[2];
+    private ReportViewModel reportViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_report);
+        reportViewModel = ViewModelProviders.of(this).get(ReportViewModel.class);
         calendarView = findViewById(R.id.calendarView);
         calendarView.state().edit()
                 .setCalendarDisplayMode(CalendarMode.MONTHS)
@@ -65,6 +75,10 @@ public class ViewReportActivity extends AppCompatActivity implements TabLayout.O
         appBarLayout = findViewById(R.id.appBarlayout);
         appBarLayout.setExpanded(false);
         dateTV.setText(sdf.format(new Date()));
+        fragments[0] = new GraphReportFragment();
+        fragments[1] = new SummeryReportFragment();
+        //expenseReport = new GraphReportFragment();
+        //summeryReport = new SummeryReportFragment();
 
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
@@ -75,17 +89,16 @@ public class ViewReportActivity extends AppCompatActivity implements TabLayout.O
         calendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
             @Override
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
+                dateTV.setText(reportViewModel.getSelectedMonthFormattedText(date));
+                try{
+                    expenseReport.getBarChartData(reportViewModel.getSelectedMonth(date));
+                    summeryReport.getSummeryData(reportViewModel.getSelectedMonth(date));
+                }catch (Exception e){
 
-                Calendar c = date.getCalendar();
-                int month = c.get(Calendar.MONTH);
-                SimpleDateFormat my = new SimpleDateFormat("MM/yyyy");
-                String selectedMonth = my.format(c.getTime());
-                dateTV.setText(sdf.format(c.getTime()));
-                expenseReport.getBarChartData(selectedMonth);
-                summeryReport.getSummeryData(selectedMonth);
-                //Toast.makeText(ViewReportActivity.this, selectedMonth, Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
         dateLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,16 +182,28 @@ public class ViewReportActivity extends AppCompatActivity implements TabLayout.O
         }
 
         @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Object fragment = super.instantiateItem(container,position);
+            fragments[position] = (Fragment) fragment;
+            if(fragments[position] instanceof ExpenseReport){
+                expenseReport = (ExpenseReport) fragments[position];
+            }else if(fragments[position] instanceof ExpenseReport.SummeryReport){
+                summeryReport = (ExpenseReport.SummeryReport) fragments[position];
+            }
+            return fragment;
+        }
+
+        @Override
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    GraphReportFragment graphReportFragment = new GraphReportFragment();
-                    expenseReport = graphReportFragment;
-                    return graphReportFragment;
+                    //GraphReportFragment graphReportFragment = new GraphReportFragment();
+                    expenseReport = (ExpenseReport) fragments[position];
+                    return fragments[position];
                 case 1:
-                    SummeryReportFragment summeryReportFragment = new SummeryReportFragment();
-                    summeryReport = summeryReportFragment;
-                    return summeryReportFragment;
+                    //SummeryReportFragment summeryReportFragment = new SummeryReportFragment();
+                    summeryReport = (ExpenseReport.SummeryReport) fragments[position];
+                    return fragments[position];
             }
             return null;
         }

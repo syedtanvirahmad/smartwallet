@@ -3,6 +3,7 @@ package com.pencilbox.user.smartwallet;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,8 @@ public class SummeryReportFragment extends Fragment implements ExpenseReport.Sum
     private TextView showExpenseSummeryTV;
     private RecyclerView recyclerView;
     private ExpenseSummeryAdapter adapter;
+    private String selectedMonth = null;
+    private static final String SELECTED_MONTH = "month";
 
     public SummeryReportFragment() {
         // Required empty public constructor
@@ -44,19 +47,26 @@ public class SummeryReportFragment extends Fragment implements ExpenseReport.Sum
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        if(savedInstanceState != null){
+            selectedMonth = savedInstanceState.getString(SELECTED_MONTH);
+        }
         View v = inflater.inflate(R.layout.fragment_summery_report, container, false);
         recyclerView = v.findViewById(R.id.rv_expenseNamesWithTotalAmount);
         reportViewModel = ViewModelProviders.of(this).get(ReportViewModel.class);
-        getSummeryData(null);
+        Toast.makeText(getActivity(), "onCreateView", Toast.LENGTH_SHORT).show();
+        getSummeryData(selectedMonth);
         return v;
     }
 
     @Override
     public void getSummeryData(String month) {
+        Toast.makeText(getActivity(), "method called", Toast.LENGTH_SHORT).show();
         //get total expense for this month
         //average expense per day
         //projected expensne ??
-
+        if(selectedMonth == null){
+            selectedMonth = month;
+        }
         List<ExpensePerExpenseName>lists = reportViewModel.getExpensesForExpenseNames(month);
         adapter = new ExpenseSummeryAdapter(lists);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
@@ -64,5 +74,11 @@ public class SummeryReportFragment extends Fragment implements ExpenseReport.Sum
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(SELECTED_MONTH,selectedMonth);
     }
 }
