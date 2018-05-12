@@ -63,7 +63,8 @@ public class SummeryReportFragment extends Fragment implements ExpenseReport.Sum
         Toast.makeText(getActivity(), "method called", Toast.LENGTH_SHORT).show();
         //get total expense for this month
         //average expense per day
-        //projected expensne ??
+        //projected expensne ?? if current month
+        //
         if(selectedMonth == null){
             selectedMonth = month;
         }

@@ -415,7 +415,7 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
                 amountET.setText("");
                 expenseDateET.setText(getCurrentDate());
 
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 mainViewModel.getAllExpenses().observe(this, new Observer<List<Expense>>() {
                     @Override
                     public void onChanged(@Nullable List<Expense> expenses) {
@@ -527,5 +527,9 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
                 expenseAmountTV.setText("Total: "+String.valueOf(mainViewModel.getTotalExpenseAmount(expenses)));
             }
         });
+    }
+
+    public void cancelBottomSheet(View view) {
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 }

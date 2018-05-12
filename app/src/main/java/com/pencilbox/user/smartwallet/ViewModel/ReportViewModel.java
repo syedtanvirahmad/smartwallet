@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.data.BarData;
@@ -52,6 +53,8 @@ public class ReportViewModel extends AndroidViewModel {
 
     private void init(CalendarDay day){
         calendar = day.getCalendar();
+        //int total = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        //Log.e("days", "init: "+total);
         my = new SimpleDateFormat("MM/yyyy");
     }
     private void init(){

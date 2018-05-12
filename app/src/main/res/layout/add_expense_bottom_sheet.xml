@@ -63,12 +63,23 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal" />
         </android.support.design.widget.TextInputLayout>
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="add"
-            android:layout_gravity="center"
-            android:onClick="addNewExpense"/>
+            android:orientation="horizontal"
+            android:gravity="center">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="cancel"
+                android:onClick="cancelBottomSheet"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="add"
+                android:onClick="addNewExpense"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
