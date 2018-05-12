@@ -10,6 +10,8 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +39,8 @@ public class MainViewModel extends AndroidViewModel {
     private Context context;
     private DatabaseReference rootRef;
     private DatabaseReference expenseRef;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -112,7 +116,11 @@ public class MainViewModel extends AndroidViewModel {
 
     public void insertNewExpenseToCloud(Expense expense, long rowId){
         //String key = expenseRef.push().getKey();
-        expenseRef.child(String.valueOf(rowId)).setValue(expense);
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        if(mUser != null){
+            expenseRef.child(mUser.getUid()).child(String.valueOf(rowId)).setValue(expense);
+        }
     }
 
     public void deleteSpecificExpenseFromCloud(Expense expense){

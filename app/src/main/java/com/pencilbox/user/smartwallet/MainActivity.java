@@ -179,7 +179,6 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
 
         labelTV = bottomSheetRoot.findViewById(R.id.addExpenseLabel);
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        //mainViewModel.uploadAllExpenses();
         expenseRV = findViewById(R.id.dailyExpenseRV);
 
         expenseAmountTV = findViewById(R.id.totalExpenseForTodayTV);
@@ -415,8 +414,6 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
                             ExpenseSuggestion.MODE);
             suggestions.saveRecentQuery(name1,null);
             Expense expense = new Expense(name1,Double.parseDouble(amountString),dateTime);
-            //add expense to firebase
-            //mainViewModel.insertNewExpenseToCloud(expense);
             boolean status
                     = mainViewModel.insertNewExpense(expense);
             if(status){
@@ -427,7 +424,7 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
                 expenseDateET.setText(getCurrentDate());
 
                 //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                mainViewModel.getAllExpenses().observe(this, new Observer<List<Expense>>() {
+                mainViewModel.getCurrentDayExpense().observe(this, new Observer<List<Expense>>() {
                     @Override
                     public void onChanged(@Nullable List<Expense> expenses) {
                         expenseAdapter.addExpenseItems(expenses);
