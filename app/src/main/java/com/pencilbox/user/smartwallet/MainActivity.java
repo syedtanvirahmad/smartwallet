@@ -84,6 +84,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements MainView,MainView.ExpenseAmountListener, OnDateSelectedListener,OnMonthChangedListener{
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+    private ExpensePreference preference;
     private FirebaseJobDispatcher jobDispatcher;
     private static final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView expenseRV;
@@ -106,9 +107,10 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preference = new ExpensePreference(this);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-        if(mUser == null){
+        if(mUser == null && !preference.isLoggedIn()){
             startActivity(new Intent(this,LoginActivity.class));
         }
         setContentView(R.layout.activity_main);
