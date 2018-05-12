@@ -56,6 +56,8 @@ import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.JobTrigger;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.Trigger;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.pencilbox.user.smartwallet.Adapter.ExpenseAdapter;
 import com.pencilbox.user.smartwallet.Database.Expense;
 import com.pencilbox.user.smartwallet.Database.ExpenseDatabase;
@@ -80,6 +82,8 @@ import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainView,MainView.ExpenseAmountListener, OnDateSelectedListener,OnMonthChangedListener{
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
     private FirebaseJobDispatcher jobDispatcher;
     private static final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView expenseRV;
@@ -102,6 +106,11 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        if(mUser == null){
+            startActivity(new Intent(this,LoginActivity.class));
+        }
         setContentView(R.layout.activity_main);
         mDrawerLayout = findViewById(R.id.drawerLayout);
         mNavigationView = findViewById(R.id.navigationView);
