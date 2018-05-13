@@ -78,6 +78,6 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
 
     @Override
     public void setAvgMonthlyIncome(double amount) {
-        avgIncomeMonthTV.setText(String.valueOf(amount));
+        avgIncomeMonthTV.setText(String.format("%.1f",amount));
     }
 }

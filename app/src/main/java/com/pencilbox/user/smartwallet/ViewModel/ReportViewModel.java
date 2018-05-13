@@ -141,4 +141,23 @@ public class ReportViewModel extends AndroidViewModel {
         }
         return lists;
     }
+
+    public double getTotalExpenseByMonth(String month){
+        return expenseDatabase.expenseDao().getTotalExpenseByMonth(getMonth(month));
+    }
+
+    public double getIncomeByMonth(String month){
+        return expenseDatabase.expenseDao().getTotalIncomeByDate(getMonth(month));
+    }
+
+    private String getMonth(String month){
+        SimpleDateFormat my = new SimpleDateFormat("MM/yyyy");
+        String dateString = "";
+        if(month == null){
+            dateString = "%/"+my.format(new Date());
+        }else{
+            dateString = "%/"+month;
+        }
+        return dateString;
+    }
 }

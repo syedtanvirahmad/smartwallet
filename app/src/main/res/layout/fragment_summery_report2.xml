@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow
+                android:layout_margin="2dp"
+                android:padding="5dp"
+                android:background="@color/brown"
+                android:minHeight="?attr/listPreferredItemHeight"
+                android:gravity="center">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:text="Total Income"
+                    android:layout_weight="2"
+                    style="@style/expenseTextStyle"/>
+                <TextView
+                    android:id="@+id/tRow_totalIncome"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    tools:text="0.0"
+                    android:layout_weight="1"
+                    style="@style/expenseTextStyle"/>
+            </TableRow>
+            <TableRow
+                android:layout_margin="2dp"
+                android:padding="5dp"
+                android:background="@color/brown"
+                android:minHeight="?attr/listPreferredItemHeight"
+                android:gravity="center">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:text="Total Expense"
+                    android:layout_weight="2"
+                    style="@style/expenseTextStyle"/>
+                <TextView
+                    android:id="@+id/tRow_totalExpense"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    tools:text="0.0"
+                    android:layout_weight="1"
+                    style="@style/expenseTextStyle"/>
+            </TableRow>
+            <TableRow
+                android:layout_margin="2dp"
+                android:padding="5dp"
+                android:background="@color/brown"
+                android:minHeight="?attr/listPreferredItemHeight"
+                android:gravity="center">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:text="Expense (Per day)"
+                    android:layout_weight="2"
+                    style="@style/expenseTextStyle"/>
+                <TextView
+                    android:id="@+id/tRow_avgExpense"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    tools:text="0.0"
+                    android:layout_weight="1"
+                    style="@style/expenseTextStyle"/>
+            </TableRow>
+            <TableRow
+                android:layout_margin="2dp"
+                android:padding="5dp"
+                android:background="@color/brown"
+                android:minHeight="?attr/listPreferredItemHeight"
+                android:gravity="center">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:text="Apprx. Expense (End of month)"
+                    android:layout_weight="2"
+                    style="@style/expenseTextStyle"/>
+                <TextView
+                    android:id="@+id/tRow_projectedExpense"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    tools:text="0.0"
+                    android:layout_weight="1"
+                    style="@style/expenseTextStyle"/>
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
+
+</LinearLayout>

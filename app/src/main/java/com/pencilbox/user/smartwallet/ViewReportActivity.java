@@ -76,7 +76,7 @@ public class ViewReportActivity extends AppCompatActivity implements TabLayout.O
         appBarLayout.setExpanded(false);
         dateTV.setText(sdf.format(new Date()));
         fragments[0] = new GraphReportFragment();
-        fragments[1] = new SummeryReportFragment();
+        fragments[1] = SummeryReportFragment2.getInstance(CalendarDay.today());
         //expenseReport = new GraphReportFragment();
         //summeryReport = new SummeryReportFragment();
 
@@ -92,7 +92,7 @@ public class ViewReportActivity extends AppCompatActivity implements TabLayout.O
                 dateTV.setText(reportViewModel.getSelectedMonthFormattedText(date));
                 try{
                     expenseReport.getBarChartData(reportViewModel.getSelectedMonth(date));
-                    summeryReport.getSummeryData(reportViewModel.getSelectedMonth(date));
+                    summeryReport.getSummeryData(reportViewModel.getSelectedMonth(date),date);
                 }catch (Exception e){
 
                 }

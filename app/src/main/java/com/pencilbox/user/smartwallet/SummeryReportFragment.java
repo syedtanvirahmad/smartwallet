@@ -18,6 +18,7 @@ import com.pencilbox.user.smartwallet.Adapter.ExpenseSummeryAdapter;
 import com.pencilbox.user.smartwallet.Database.ExpensePerExpenseName;
 import com.pencilbox.user.smartwallet.Interface.ExpenseReport;
 import com.pencilbox.user.smartwallet.ViewModel.ReportViewModel;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.util.List;
 
@@ -54,12 +55,12 @@ public class SummeryReportFragment extends Fragment implements ExpenseReport.Sum
         recyclerView = v.findViewById(R.id.rv_expenseNamesWithTotalAmount);
         reportViewModel = ViewModelProviders.of(this).get(ReportViewModel.class);
         Toast.makeText(getActivity(), "onCreateView", Toast.LENGTH_SHORT).show();
-        getSummeryData(selectedMonth);
+        //getSummeryData(selectedMonth);
         return v;
     }
 
     @Override
-    public void getSummeryData(String month) {
+    public void getSummeryData(String month, CalendarDay date) {
         Toast.makeText(getActivity(), "method called", Toast.LENGTH_SHORT).show();
         //get total expense for this month
         //average expense per day
