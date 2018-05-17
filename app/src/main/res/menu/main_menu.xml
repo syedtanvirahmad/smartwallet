@@ -6,12 +6,9 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:icon="@android:drawable/ic_menu_search"/>
-    <item android:id="@+id/viewReport"
-        android:title="View Report"
-        app:showAsAction="never"
-        />
-    <item android:id="@+id/dashboard"
-        android:title="Dashboard"
-        app:showAsAction="never"
-        />
+    <item android:title="shoppingList"
+        android:id="@+id/shoppingList"
+        android:icon="@drawable/ic_shoplist_white_24dp"
+        app:showAsAction="ifRoom"/>
+
 </menu>

@@ -13,7 +13,7 @@ import com.pencilbox.user.smartwallet.Utils.Constants;
 /**
  * Created by User on 11/21/2017.
  */
-@Database(entities = {Expense.class,IncomeSource.class,Income.class},version = 5)
+@Database(entities = {Expense.class,IncomeSource.class,Income.class,BankAccount.class},version = 6)
 public abstract class ExpenseDatabase extends RoomDatabase{
     public abstract ExpenseDao expenseDao();
 
@@ -59,10 +59,22 @@ public abstract class ExpenseDatabase extends RoomDatabase{
             database.execSQL("ALTER TABLE income_table_new RENAME TO income_table");
         }
     };
+
+    static final Migration MIGRATION_5_6 = new Migration(5,6) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE `bank_account`(" +
+                    "`accountId` INTEGER PRIMARY KEY NOT NULL, " +
+                    "`bank_name` TEXT, " +
+                    "`account_name` TEXT, " +
+                    "`account_no` TEXT, " +
+                    "`total_balance` REAL NOT NULL)");
+        }
+    };
     public static ExpenseDatabase getInstance(Context context){
         return Room.databaseBuilder(context,ExpenseDatabase.class, Constants.DATABASE_NAME)
                 .allowMainThreadQueries()
-                .addMigrations(MIGRATION_1_2,MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5)
+                .addMigrations(MIGRATION_1_2,MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6)
                 .build();
     }
 }

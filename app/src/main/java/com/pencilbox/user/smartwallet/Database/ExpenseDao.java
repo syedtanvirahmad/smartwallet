@@ -100,4 +100,13 @@ public interface ExpenseDao {
     @Query("select sum(income_amount) from income_table where income_date like:date")
     double getTotalIncomeByDate(String date);
 
+    /*
+    * bank account
+    * */
+
+    @Insert
+    long addBankAccount(BankAccount bankAccount);
+
+    @Query("select * from bank_account")
+    LiveData<List<BankAccount>>getAllBankAccounts();
 }
