@@ -11,7 +11,7 @@
     app:cardBackgroundColor="@color/brown"
     android:foreground="?selectableItemBackground">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -26,13 +26,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="00956233325"
+            android:layout_below="@id/row_bank_name"
             style="@style/expenseTextStyle"/>
         <TextView
             android:id="@+id/row_bank_balance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/row_bank_accountNo"
             tools:text="Dutch-Bangla Bank"
             style="@style/expenseTextStyle"/>
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/row_acc_options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_vertical_dot_white_24"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="3dp"
+            android:clickable="true"
+
+            android:textAppearance="?android:textAppearanceLarge"/>
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

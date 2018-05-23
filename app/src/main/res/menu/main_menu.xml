@@ -10,5 +10,8 @@
         android:id="@+id/shoppingList"
         android:icon="@drawable/ic_shoplist_white_24dp"
         app:showAsAction="ifRoom"/>
+    <item android:title="Back Up Data"
+        android:id="@+id/back_up_data"
+        app:showAsAction="never"/>
 
 </menu>

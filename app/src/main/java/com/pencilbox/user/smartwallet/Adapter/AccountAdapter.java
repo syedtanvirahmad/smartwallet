@@ -2,9 +2,13 @@ package com.pencilbox.user.smartwallet.Adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pencilbox.user.smartwallet.Database.BankAccount;
 import com.pencilbox.user.smartwallet.R;
@@ -41,11 +45,29 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountV
         TextView bankNameTV;
         TextView accNoTV;
         TextView accBalanceTV;
+        ImageView optionsTV;
         public AccountViewHolder(View itemView) {
             super(itemView);
             bankNameTV = itemView.findViewById(R.id.row_bank_name);
             accNoTV = itemView.findViewById(R.id.row_bank_accountNo);
             accBalanceTV = itemView.findViewById(R.id.row_bank_balance);
+            optionsTV = itemView.findViewById(R.id.row_acc_options);
+            optionsTV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    PopupMenu popupMenu = new PopupMenu(view.getContext(),optionsTV);
+                    popupMenu.inflate(R.menu.account_popup);
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            Toast.makeText(view.getContext(), accounts.get(position).getBankName(), Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                    });
+                    popupMenu.show();
+                }
+            });
         }
     }
 

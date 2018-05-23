@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
@@ -41,5 +45,8 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
     implementation 'com.prolificinteractive:material-calendarview:1.4.3'
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation 'com.google.android.gms:play-services-drive:15.0.1'
+    implementation 'com.google.code.gson:gson:2.8.4'
 }
 apply plugin: 'com.google.gms.google-services'

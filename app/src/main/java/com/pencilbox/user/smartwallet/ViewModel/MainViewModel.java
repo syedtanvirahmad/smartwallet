@@ -66,6 +66,9 @@ public class MainViewModel extends AndroidViewModel {
         expenses = expenseDatabase.expenseDao().getAllExpenses();
         return expenses;
     }
+    public List<Expense> getAllExpensesAsList() {
+        return expenseDatabase.expenseDao().getAllExpensesAsList();
+    }
 
     public void uploadAllExpenses(){
         List<Expense> expenseList = expenseDatabase.expenseDao().getAllExpensesAsList();

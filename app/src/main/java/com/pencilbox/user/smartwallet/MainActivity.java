@@ -56,8 +56,20 @@ import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.JobTrigger;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.Trigger;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveClient;
+import com.google.android.gms.drive.DriveContents;
+import com.google.android.gms.drive.DriveFolder;
+import com.google.android.gms.drive.DriveResourceClient;
+import com.google.android.gms.drive.MetadataChangeSet;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
 import com.pencilbox.user.smartwallet.Adapter.ExpenseAdapter;
 import com.pencilbox.user.smartwallet.Database.Expense;
 import com.pencilbox.user.smartwallet.Database.ExpenseDatabase;
@@ -75,6 +87,9 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -104,6 +119,8 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
     private MaterialCalendarView materialCalendarView;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
+    private DriveClient driveClient;
+    private DriveResourceClient resourceClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -270,8 +287,73 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
             case R.id.shoppingList:
                 Toast.makeText(this, "This feature is coming soon", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.back_up_data:
+                signIn();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void signIn() {
+        GoogleSignInClient mSignInClient = buildGoogleSignInClient();
+        startActivityForResult(mSignInClient.getSignInIntent(),19);
+    }
+
+    private GoogleSignInClient buildGoogleSignInClient() {
+        GoogleSignInOptions googleSignInOptions =
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestScopes(Drive.SCOPE_FILE)
+                        .build();
+        return GoogleSignIn.getClient(this,googleSignInOptions);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 19 && resultCode == RESULT_OK){
+            Toast.makeText(this, "signed in", Toast.LENGTH_SHORT).show();
+            uploadFileToDrive();
+        }
+    }
+
+    private void uploadFileToDrive() {
+        Gson gson = new Gson();
+        List<Expense>expenses = mainViewModel.getAllExpensesAsList();
+        final String expenseList = gson.toJson(expenses);
+        //Log.e("json", "uploadFileToDrive: "+expenseList);
+        driveClient = Drive.getDriveClient(this,GoogleSignIn.getLastSignedInAccount(this));
+        resourceClient = Drive.getDriveResourceClient(this,GoogleSignIn.getLastSignedInAccount(this));
+
+        final Task<DriveFolder> rootFolderTask = resourceClient.getRootFolder();
+        final Task<DriveContents> createContentsTask = resourceClient.createContents();
+        Tasks.whenAll(rootFolderTask,createContentsTask)
+                .continueWithTask(task ->{
+                    DriveFolder parent = rootFolderTask.getResult();
+                    DriveContents contents = createContentsTask.getResult();
+                    OutputStream outputStream = contents.getOutputStream();
+
+                    try (Writer writer = new OutputStreamWriter(outputStream)) {
+                        writer.write(expenseList);
+                    }
+
+                    MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
+                            .setTitle("Daily Expenses")
+                            .setMimeType("text/plain")
+                            .setStarred(true)
+                            .build();
+                    return resourceClient.createFile(parent,changeSet,contents);
+                }).addOnSuccessListener(this,
+                driveFile -> {
+                    /*showMessage(getString(R.string.file_created,
+                            driveFile.getDriveId().encodeToString()));*/
+                    Toast.makeText(this, "uploaded", Toast.LENGTH_SHORT).show();
+                    //finish();
+                })
+                .addOnFailureListener(this, e -> {
+                    Toast.makeText(this, "failed"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "uploadFileToDrive: "+e.getMessage());
+                    /*showMessage(getString(R.string.file_create_error));*/
+                    //finish();
+                });
     }
 
     public void getReport(View view) {
