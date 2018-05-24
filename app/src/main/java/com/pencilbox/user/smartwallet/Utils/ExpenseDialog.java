@@ -15,12 +15,14 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.ScrollingTabContainerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -46,7 +48,7 @@ import java.util.List;
  * Created by User on 11/21/2017.
  */
 
-public final class AddExpenseDialog {
+public final class ExpenseDialog {
     private static ExpenseDatabase expenseDatabase;
     private static String incomeType;
     private static List<IncomeSource>sources;
@@ -219,5 +221,26 @@ public final class AddExpenseDialog {
             calendar.set(year,month,day);
             return calendar.getTime();
         }
+    }
+
+    public static void createDialogForDepositOrWithdraw(Context context, String scheme, OnUpdateBalanceListener listener){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(scheme);
+        EditText editText = new AutoCompleteTextView(context);
+        editText.setHint(R.string.enter_amount);
+        editText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        builder.setView(editText);
+        builder.setPositiveButton(scheme, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                double amount = Double.parseDouble(editText.getText().toString());
+                listener.onUpdateBalance(amount);
+            }
+        });
+        builder.show();
+    }
+    public interface OnUpdateBalanceListener{
+        void onUpdateBalance(double amount);
     }
 }

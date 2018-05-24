@@ -3,9 +3,6 @@ package com.pencilbox.user.smartwallet.Interface;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.widget.DatePicker;
-import android.widget.TextView;
-
-import com.pencilbox.user.smartwallet.Utils.AddExpenseDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

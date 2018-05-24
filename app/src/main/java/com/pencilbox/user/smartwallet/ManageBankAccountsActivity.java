@@ -24,7 +24,7 @@ import com.pencilbox.user.smartwallet.ViewModel.AccountViewModel;
 
 import java.util.List;
 
-public class ManageBankAccountsActivity extends AppCompatActivity {
+public class ManageBankAccountsActivity extends AppCompatActivity implements AccountAdapter.MyAccounts {
     private Toolbar toolbar;
     private RecyclerView accountRV;
     private AccountAdapter adapter;
@@ -49,7 +49,7 @@ public class ManageBankAccountsActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<BankAccount> bankAccounts) {
                 if(adapter == null){
-                    adapter = new AccountAdapter(bankAccounts);
+                    adapter = new AccountAdapter(bankAccounts,ManageBankAccountsActivity.this);
                     accountRV.setAdapter(adapter);
                 }else{
                     adapter.addBankAccounts(bankAccounts);
@@ -121,5 +121,15 @@ public class ManageBankAccountsActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void deposit(BankAccount account) {
+        accountViewModel.deposit(account,this);
+    }
+
+    @Override
+    public void withdraw(BankAccount account) {
+        accountViewModel.withdraw(account,this);
     }
 }

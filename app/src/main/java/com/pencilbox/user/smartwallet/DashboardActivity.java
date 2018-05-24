@@ -1,24 +1,15 @@
 package com.pencilbox.user.smartwallet;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.pencilbox.user.smartwallet.Database.FullIncomeTest;
-import com.pencilbox.user.smartwallet.Interface.AddIncomeListener;
 import com.pencilbox.user.smartwallet.Interface.DashboardView;
 import com.pencilbox.user.smartwallet.Interface.ValueAverageCalculateImpl;
-import com.pencilbox.user.smartwallet.Utils.AddExpenseDialog;
 import com.pencilbox.user.smartwallet.ViewModel.DashboardViewModel;
 import com.pencilbox.user.smartwallet.ViewModel.IncomeViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity implements DashboardView{
 

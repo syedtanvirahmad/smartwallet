@@ -2,10 +2,8 @@ package com.pencilbox.user.smartwallet;
 
 import android.app.SearchManager;
 import android.app.SearchableInfo;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -13,23 +11,17 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
 import android.graphics.RectF;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.provider.SearchRecentSuggestions;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -44,18 +36,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
-import com.firebase.jobdispatcher.Job;
-import com.firebase.jobdispatcher.JobTrigger;
-import com.firebase.jobdispatcher.Lifetime;
-import com.firebase.jobdispatcher.Trigger;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -74,13 +60,9 @@ import com.pencilbox.user.smartwallet.Adapter.ExpenseAdapter;
 import com.pencilbox.user.smartwallet.Database.Expense;
 import com.pencilbox.user.smartwallet.Database.ExpenseDatabase;
 import com.pencilbox.user.smartwallet.Interface.AddIncomeListener;
-import com.pencilbox.user.smartwallet.Interface.LoadFilteredExpenses;
 import com.pencilbox.user.smartwallet.Interface.MainView;
 import com.pencilbox.user.smartwallet.Interface.MainViewImpl;
-import com.pencilbox.user.smartwallet.Interface.OnAddExpenseFinishedListener;
-import com.pencilbox.user.smartwallet.Utils.AddExpenseDialog;
-import com.pencilbox.user.smartwallet.Utils.Constants;
-import com.pencilbox.user.smartwallet.Utils.ExpenseFilter;
+import com.pencilbox.user.smartwallet.Utils.ExpenseDialog;
 import com.pencilbox.user.smartwallet.ViewModel.MainViewModel;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -587,7 +569,7 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
             mDrawerLayout.closeDrawers();
             switch (item.getItemId()){
                 case R.id.nav_addIncomeSource:
-                    AddExpenseDialog.createDialogForAddingIncomeSource(MainActivity.this, new AddIncomeListener.AddIncomeSourceListener() {
+                    ExpenseDialog.createDialogForAddingIncomeSource(MainActivity.this, new AddIncomeListener.AddIncomeSourceListener() {
                         @Override
                         public void onAddIncomeSourceAdded() {
                             Snackbar.make(root,"Income Source Added",Snackbar.LENGTH_SHORT).show();
@@ -595,7 +577,7 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
                     });
                     return true;
                 case R.id.nav_addIncome:
-                    AddExpenseDialog.createDialogForAddingIncome(MainActivity.this, new AddIncomeListener() {
+                    ExpenseDialog.createDialogForAddingIncome(MainActivity.this, new AddIncomeListener() {
                         @Override
                         public void onAddIncome() {
                             Snackbar.make(root,"Income Added",Snackbar.LENGTH_SHORT).show();
