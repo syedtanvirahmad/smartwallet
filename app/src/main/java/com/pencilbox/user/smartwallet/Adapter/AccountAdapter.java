@@ -75,7 +75,6 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountV
                                     myAccounts.deposit(account);
                                     break;
                                 case R.id.withdraw:
-
                                     myAccounts.withdraw(account);
                                     break;
                             }

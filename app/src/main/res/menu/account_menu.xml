@@ -3,6 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:title="Add Account"
         android:id="@+id/addAccount"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_accuont_white_24dp"/>
+    <item android:title="Show Transactions"
+        android:id="@+id/showTransactions"
         app:showAsAction="always"
         android:icon="@drawable/ic_accuont_white_24dp"/>
 </menu>

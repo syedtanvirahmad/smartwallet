@@ -41,7 +41,7 @@
     <item android:title="Accounts">
         <menu>
             <item
-                android:id="@+id/accounts"
+                android:id="@+id/transactions"
                 android:icon="@mipmap/ic_launcher"
                 android:title="Manage Accounts" />
         </menu>

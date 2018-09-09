@@ -42,4 +42,6 @@
         completions."
     </string>
     <string name="enter_amount">enter amount</string>
+    <string name="action_withdraw_done">Withdrawn</string>
+    <string name="action_deposit_done">Deposited</string>
 </resources>

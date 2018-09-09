@@ -13,7 +13,7 @@ import com.pencilbox.user.smartwallet.Utils.Constants;
 /**
  * Created by User on 11/21/2017.
  */
-@Database(entities = {Expense.class,IncomeSource.class,Income.class,BankAccount.class},version = 6)
+@Database(entities = {Expense.class,IncomeSource.class,Income.class,BankAccount.class,BankTransaction.class,Shopping.class,ShoppingDetails.class},version = 8)
 public abstract class ExpenseDatabase extends RoomDatabase{
     public abstract ExpenseDao expenseDao();
 
@@ -71,10 +71,40 @@ public abstract class ExpenseDatabase extends RoomDatabase{
                     "`total_balance` REAL NOT NULL)");
         }
     };
+    static final Migration MIGRATION_6_7 = new Migration(6,7) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE `transaction_info`(" +
+                    "`transactionId` INTEGER PRIMARY KEY NOT NULL, " +
+                    "`transaction_date` TEXT , " +
+                    "`transaction_action` TEXT, " +
+                    "`account_id` INTEGER NOT NULL, " +
+                    "`transaction_amount` REAL NOT NULL, "+
+                    "`current_balance` REAL NOT NULL)");
+        }
+    };
+
+    static final Migration MIGRATION_7_8 = new Migration(7,8) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE `tbl_shopping`(" +
+                    "`shopping_id` INTEGER PRIMARY KEY NOT NULL, " +
+                    "`shopping_title` TEXT , " +
+                    "`shopping_status` INTEGER NOT NULL)");
+
+            database.execSQL("CREATE TABLE `tbl_shopping_details`(" +
+                    "`shopping_details_id` INTEGER PRIMARY KEY NOT NULL, " +
+                    "`shopping_id` INTEGER NOT NULL, " +
+                    "`item_name` TEXT , " +
+                    "`item_qty` INTEGER NOT NULL, " +
+                    "`item_price` REAL NOT NULL, " +
+                    "`item_status` INTEGER NOT NULL)");
+        }
+    };
     public static ExpenseDatabase getInstance(Context context){
         return Room.databaseBuilder(context,ExpenseDatabase.class, Constants.DATABASE_NAME)
                 .allowMainThreadQueries()
-                .addMigrations(MIGRATION_1_2,MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6)
+                .addMigrations(MIGRATION_1_2,MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6,MIGRATION_6_7,MIGRATION_7_8)
                 .build();
     }
 }

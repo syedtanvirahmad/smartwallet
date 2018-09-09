@@ -113,4 +113,15 @@ public interface ExpenseDao {
 
     @Update
     int updateBalance(BankAccount bankAccount);
+
+    @Insert
+    long addTransaction(BankTransaction transaction);
+
+    @Query("select * from transaction_info inner join bank_account on bank_account.accountId = transaction_info.account_id order by transactionId desc")
+    LiveData<List<TransactionDetailsPojo>> getAllTransactions();
+
+    @Delete
+    int deleteTransaction(BankTransaction bankTransaction);
+
+
 }

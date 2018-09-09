@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         if(mUser == null && !preference.isLoggedIn()){
+            finish();
             startActivity(new Intent(this,LoginActivity.class));
         }
         setContentView(R.layout.activity_main);
@@ -602,7 +603,7 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
                 case R.id.report:
                     startActivity(new Intent(MainActivity.this,ViewReportActivity.class));
                     break;
-                case R.id.accounts:
+                case R.id.transactions:
                     startActivity(new Intent(MainActivity.this,ManageBankAccountsActivity.class));
                     break;
             }
