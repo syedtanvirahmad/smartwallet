@@ -268,7 +268,8 @@ public class MainActivity extends AppCompatActivity implements MainView,MainView
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
             case R.id.shoppingList:
-                Toast.makeText(this, "This feature is coming soon", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "This feature is coming soon", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this,ShoppingListActivity.class));
                 break;
             case R.id.back_up_data:
                 signIn();

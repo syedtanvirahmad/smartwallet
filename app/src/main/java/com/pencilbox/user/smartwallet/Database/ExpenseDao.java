@@ -23,6 +23,9 @@ public interface ExpenseDao {
     @Query("select * from expense where expense_date_time like:date order by id desc")
     LiveData<List<Expense>>getTodaysExpense(String date);
 
+    @Query("select sum(expense_amount) from expense where expense_date_time like:date order by id desc")
+    double getTodaysExpenseTotal(String date);
+
     @Query("select * from expense where expense_date_time like:date order by id desc")
     LiveData<List<Expense>>getCurrentMonthExpense(String date);
 
@@ -123,5 +126,7 @@ public interface ExpenseDao {
     @Delete
     int deleteTransaction(BankTransaction bankTransaction);
 
+    @Query("select * from tbl_shopping")
+    LiveData<List<Shopping>>getShoppingList();
 
 }
